@@ -72,3 +72,38 @@ const currencies = new Map([
 ]);
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/* // Slice
+let arr = ["a", "b", "c", "d", "e"];
+console.log(arr.slice(2)); // does not mutate the original array
+console.log(arr);
+console.log(arr.slice(2, 4)); // end parameter is not included in the output
+console.log(arr.slice(-2));
+console.log(arr.slice(-1)); // last element
+console.log(arr.slice(1, -2));
+console.log(arr.slice()); // copying whole array
+console.log([...arr]); // same as above
+
+// Splice
+// console.log(arr.splice(2)); // does mutate the original array
+arr.splice(-1); // remove the last element
+console.log(arr);
+arr.splice(1, 2); // last element is the delete count
+console.log(arr);
+
+// Reverse
+arr = ["a", "b", "c", "d", "e"];
+const arr2 = ["j", "i", "h", "g", "f"];
+console.log(arr2.reverse()); // does mutate the original array
+console.log(arr2);
+
+// Concat
+const letters = arr.concat(arr2); // does not mutate the original array
+console.log(letters);
+console.log([...arr, ...arr2]);
+
+// Join
+console.log(letters.join(" + "));
+
+// Push, unshift, pop, shift, indexOf and includes */
