@@ -60,6 +60,24 @@ const inputLoanAmount = document.querySelector(".form-input-loan-amount");
 const inputCloseUsername = document.querySelector(".form-input-username");
 const inputClosePassword = document.querySelector(".form-input-password");
 
+// Display movements
+function displayMovements(movements) {
+  containerMovements.innerHTML = "";
+  movements.forEach((move, i) => {
+    const type = move > 0 ? "deposit" : "withdrawal";
+    const html = `
+    <div class="movements-row">
+        <div class="movements-type movements-type-${type}">${
+      i + 1
+    } ${type}(s)</div>
+        <div class="movements-value">${move}$</div>
+    </div>
+    `;
+    containerMovements.insertAdjacentHTML("afterbegin", html);
+  });
+}
+displayMovements(accounts[0].movements);
+
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 // Lectures
