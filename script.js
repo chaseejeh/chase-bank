@@ -65,13 +65,13 @@ const inputClosePassword = document.querySelector(".form-input-password");
 // Lectures
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
-const currencies = new Map([
-  ["USD", "United States dollar"],
-  ["EUR", "Euro"],
-  ["GBP", "Pound sterling"],
-]);
+// const currencies = new Map([
+//   ["USD", "United States dollar"],
+//   ["EUR", "Euro"],
+//   ["GBP", "Pound sterling"],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 /* // Slice
@@ -107,3 +107,64 @@ console.log([...arr, ...arr2]);
 console.log(letters.join(" + "));
 
 // Push, unshift, pop, shift, indexOf and includes */
+
+/* // At method
+const arr = [23, 11, 64];
+console.log(arr[0]);
+console.log(arr.at(0)); // ES2022
+console.log(arr[arr.length - 1]); // last element
+console.log(arr.slice(-1)[0]); // last element
+console.log(arr.at(-1)); //  last element
+console.log(arr.at(-2));
+console.log("Shohan".at(0));
+console.log("Shohan".at(-1)); */
+
+/* // forEach
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  else console.log(`Movement ${i + 1}: You withdrew: ${Math.abs(movement)}`);
+}
+
+console.log("------- FOREACH -------");
+movements.forEach(function (movement, index, array) {
+  if (movement > 0)
+    console.log(`Movement ${index + 1}: You deposited: ${movement}`);
+  else
+    console.log(`Movement ${index + 1}: You withdrew: ${Math.abs(movement)}`);
+});
+
+// (element, index, entire array)
+// forEach does not support continue and beak statements
+
+movements.forEach((move, i, arr) => console.log(`${i + 1}: ${move}`)); */
+
+/* // forEach with maps and sets
+// Map
+const currencies = new Map([
+  ["USD", "United States dollar"],
+  ["EUR", "Euro"],
+  ["GBP", "Pound sterling"],
+]);
+
+currencies.forEach((value, key, map) => {
+  console.log(`${key}: ${value}`);
+});
+
+// (value, key, map)
+
+// Set
+const currenciesUnique = new Set(["USD", "BDT", "USD", "EUR", "GBP", "BDT"]);
+console.log(currenciesUnique);
+
+currenciesUnique.forEach((value, _value, map) =>
+  console.log(`${value}: ${value}`)
+);
+
+// Sets do not have any index
+// _value is unneccessary variable
+
+const girls = new Set(["Tumpa", "Ayesha", "Sabrina", "Priya"]);
+
+girls.forEach((girl) => console.log(girl)); */
