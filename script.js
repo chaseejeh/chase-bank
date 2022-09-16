@@ -222,6 +222,7 @@ console.log(robbersMap); */
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // Deposits
+// (element, index, entire array)
 const deposits = movements.filter((move) => move > 0); // Returns a new array based on the condition we passed
 console.log(deposits);
 
@@ -259,3 +260,23 @@ const foods = [
 
 const foodsWithP = foods.filter((food) => food.startsWith("P"));
 console.log(foodsWithP); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Reduce
+/////////////////////////////////////////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
+
+// ((accumulator, element, index, entire array), 0)
+// reduce method takes two parameters and the last param is the default value of the accumulator
+const balance = movements.reduce((acc, el) => acc + el, 0);
+console.log(balance);
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const multi = arr.reduce((acc, el) => acc * el, 1);
+console.log(multi);
+
+const arr2 = [3, 7, , 9, 12, 34, 5, 56, 7, 87, 32];
+const add = arr2.reduce((acc, el) => acc + el, 0);
+console.log(add); */
