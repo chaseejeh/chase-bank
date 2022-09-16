@@ -214,3 +214,48 @@ console.log(movementsUSD);
 const robbers = [1400, 200, 900, 400, 50, 1200];
 const robbersMap = robbers.map((money) => money / 2);
 console.log(robbersMap); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Filter
+/////////////////////////////////////////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// Deposits
+const deposits = movements.filter((move) => move > 0); // Returns a new array based on the condition we passed
+console.log(deposits);
+
+// Starts with letter 'S'
+const friends = [
+  "Tumpa",
+  "Ayesha",
+  "Shohan",
+  "Sabrina",
+  "Rimi",
+  "Maisha",
+  "Sumaiya",
+  "Suraiya",
+  "Nibir",
+  "Sarah",
+];
+
+const friendsWithLetterS = friends.filter((friend) => friend.startsWith("S"));
+console.log(friendsWithLetterS);
+
+// Withdrawals
+const withdrawals = movements.filter((move) => move < 0);
+console.log(withdrawals);
+
+// Foods
+const foods = [
+  "Burger",
+  "Pizza",
+  "Pasta",
+  "Noodles",
+  "Ramen",
+  "Fajita",
+  "French Fries",
+];
+
+const foodsWithP = foods.filter((food) => food.startsWith("P"));
+console.log(foodsWithP); */
