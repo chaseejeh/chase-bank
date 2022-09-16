@@ -60,6 +60,18 @@ const inputLoanAmount = document.querySelector(".form-input-loan-amount");
 const inputCloseUsername = document.querySelector(".form-input-username");
 const inputClosePassword = document.querySelector(".form-input-password");
 
+// Create usernames
+function createUsernames(accounts) {
+  accounts.forEach((account) => {
+    account.username = account.owner
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word[0])
+      .join("");
+  });
+}
+createUsernames(accounts);
+
 // Display movements
 function displayMovements(movements) {
   containerMovements.innerHTML = "";
@@ -187,6 +199,7 @@ const girls = new Set(["Tumpa", "Ayesha", "Sabrina", "Priya"]);
 
 girls.forEach((girl) => console.log(girl)); */
 
+/* 
 /////////////////////////////////////////////////////////////
 // Map method (returns a new array)
 /////////////////////////////////////////////////////////////
@@ -200,4 +213,4 @@ console.log(movementsUSD);
 
 const robbers = [1400, 200, 900, 400, 50, 1200];
 const robbersMap = robbers.map((money) => money / 2);
-console.log(robbersMap);
+console.log(robbersMap); */
