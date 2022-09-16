@@ -334,3 +334,20 @@ const total = movements
   .map((move) => move * 1.1)
   .reduce((acc, move) => acc + move, 0);
 console.log(Math.trunc(total)); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Find method (retrive one element based on the condition)
+/////////////////////////////////////////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const firstWithdrawal = movements.find((move) => move < 0);
+console.log(firstWithdrawal);
+// Returns first element's (not array) value from the array
+
+console.log(accounts);
+
+const account = accounts.find((account) => account.owner === "Afrin Tumpa");
+console.log(account);
+
+const username = accounts.find((account) => account.username === "sr");
+console.log(username); */
