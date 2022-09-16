@@ -90,6 +90,13 @@ function displayMovements(movements) {
 }
 displayMovements(accounts[0].movements);
 
+// Display balance
+function displayBalance(movements) {
+  const balance = movements.reduce((acc, move) => acc + move, 0);
+  labelBalance.textContent = `${balance}$`;
+}
+displayBalance(accounts[0].movements);
+
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 // Lectures
@@ -279,4 +286,18 @@ console.log(multi);
 
 const arr2 = [3, 7, , 9, 12, 34, 5, 56, 7, 87, 32];
 const add = arr2.reduce((acc, el) => acc + el, 0);
-console.log(add); */
+console.log(add);
+
+// Maximum
+const max = movements.reduce(
+  (acc, move) => (acc > move ? acc : move),
+  movements[0]
+);
+console.log(max);
+
+// Minimum
+const min = movements.reduce(
+  (acc, move) => (acc < move ? acc : move),
+  movements[0]
+);
+console.log(min); */
