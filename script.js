@@ -97,6 +97,27 @@ function displayBalance(movements) {
 }
 displayBalance(accounts[0].movements);
 
+// Display summary
+function displaySummary(movements) {
+  const incomes = movements
+    .filter((move) => move > 0)
+    .reduce((acc, move) => acc + move, 0);
+  labelSumIn.textContent = `${incomes}$`;
+
+  const outcomes = movements
+    .filter((move) => move < 0)
+    .reduce((acc, move) => acc + move, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)}$`;
+
+  const interest = movements
+    .filter((move) => move > 0)
+    .map((dep) => (dep * 1.2) / 100)
+    .filter((int) => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}$`;
+}
+displaySummary(accounts[0].movements);
+
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 // Lectures
@@ -301,3 +322,15 @@ const min = movements.reduce(
   movements[0]
 );
 console.log(min); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Chaninig methods (Data transformation pipeline)
+/////////////////////////////////////////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const total = movements
+  .filter((move) => move > 0)
+  .map((move) => move * 1.1)
+  .reduce((acc, move) => acc + move, 0);
+console.log(Math.trunc(total)); */
