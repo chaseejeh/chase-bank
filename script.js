@@ -186,3 +186,18 @@ currenciesUnique.forEach((value, _value, map) =>
 const girls = new Set(["Tumpa", "Ayesha", "Sabrina", "Priya"]);
 
 girls.forEach((girl) => console.log(girl)); */
+
+/////////////////////////////////////////////////////////////
+// Map method (returns a new array)
+/////////////////////////////////////////////////////////////
+// (value, index, array)
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const euroToUsd = 1.1;
+const movementsUSD = movements.map((move, index, arr) =>
+  Math.trunc(move * euroToUsd)
+);
+console.log(movementsUSD);
+
+const robbers = [1400, 200, 900, 400, 50, 1200];
+const robbersMap = robbers.map((money) => money / 2);
+console.log(robbersMap);
