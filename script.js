@@ -134,9 +134,6 @@ btnLogin.addEventListener("click", (e) => {
   );
 
   if (currentAccount?.password === Number(inputLoginPassword.value)) {
-    // Clear input fields
-    inputLoginUsername.value = inputLoginPassword.value = "";
-    inputLoginPassword.blur();
     // Display UI and welcome message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(" ")[0]
@@ -146,14 +143,14 @@ btnLogin.addEventListener("click", (e) => {
     // Update UI
     updateUI(currentAccount);
   } else {
-    // Clear input fields
-    inputLoginUsername.value = inputLoginPassword.value = "";
-    inputLoginPassword.blur();
     // Hide UI and display warning message
     labelWelcome.textContent = "Incorrect user or password!";
     labelWelcome.style.color = "tomato";
     containerApp.style.opacity = 0;
   }
+  // Clear input fields
+  inputLoginUsername.value = inputLoginPassword.value = "";
+  inputLoginPassword.blur();
 });
 
 // Implementing transfers
@@ -190,6 +187,31 @@ btnTransfer.addEventListener("click", (e) => {
   }
 });
 
+// Implementing loan
+btnLoan.addEventListener("click", (e) => {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+
+  if (
+    amount > 0 &&
+    currentAccount.movements.some((move) => move >= amount * 0.1)
+  ) {
+    // Add movement
+    currentAccount.movements.push(amount);
+    // Update UI
+    updateUI(currentAccount);
+    // Display message
+    labelWelcome.textContent = "Loan request granted!";
+    labelWelcome.style.color = "mediumturquoise";
+  } else {
+    // Display warning message
+    labelWelcome.textContent = "Amount not granted!";
+    labelWelcome.style.color = "tomato";
+  }
+  // Clear field
+  inputLoanAmount.value = "";
+});
+
 // Close account
 btnClose.addEventListener("click", (e) => {
   e.preventDefault();
@@ -203,21 +225,18 @@ btnClose.addEventListener("click", (e) => {
     );
     // Delete account
     accounts.splice(index, 1);
-    // Clear fields
-    inputCloseUsername.value = inputClosePassword.value = "";
-    inputClosePassword.blur();
     // Hide UI and display warning message
     labelWelcome.textContent = "Account deleted!";
     labelWelcome.style.color = "mediumturquoise";
     containerApp.style.opacity = 0;
   } else {
-    // Clear fields
-    inputCloseUsername.value = inputClosePassword.value = "";
-    inputClosePassword.blur();
     // Display warning message
     labelWelcome.textContent = "Action failed!";
     labelWelcome.style.color = "tomato";
   }
+  // Clear fields
+  inputCloseUsername.value = inputClosePassword.value = "";
+  inputClosePassword.blur();
 });
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -460,3 +479,22 @@ console.log(username); */
 const arr = [23, 33, 44, 56, 12, 32];
 const firstIndex = arr.findIndex((el) => el >= 50);
 console.log(firstIndex); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Some and every method
+/////////////////////////////////////////////////////////////
+const arr = [2, 3, 4, 5, 1, 3, -2, 9, 43, -23];
+console.log(arr);
+// Equality
+console.log(arr.includes(-2));
+
+// Condition
+const anyPositive = arr.some((el) => el > 40); // If the any element fullfills the condition, the some method returns true
+console.log(anyPositive);
+
+// Every
+// If every elements fullfill the condition, the every method returns true
+const arr2 = [1, 3, 4, 5, 67, 23];
+console.log(arr.every((el) => el > 0));
+console.log(arr2.every((el) => el > 0)); */
