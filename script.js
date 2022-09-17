@@ -112,7 +112,7 @@ function displaySummary(account) {
     .map((dep) => (dep * account.interestRate) / 100)
     .filter((int) => int >= 1)
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}$`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}$`;
 }
 
 // Update UI
@@ -498,3 +498,28 @@ console.log(anyPositive);
 const arr2 = [1, 3, 4, 5, 67, 23];
 console.log(arr.every((el) => el > 0));
 console.log(arr2.every((el) => el > 0)); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Flat and flatmap
+/////////////////////////////////////////////////////////////
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat()); // default level is 1
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2)); // 2 defines the deep level
+
+// Flat
+const overalBalance = accounts
+  .map((account) => account.movements)
+  .flat()
+  .reduce((acc, move) => acc + move, 0);
+
+console.log(overalBalance);
+
+// Flatmap
+const overalBalance2 = accounts
+  .flatMap((account) => account.movements) // map + flat (only goes 1 level deep)
+  .reduce((acc, move) => acc + move, 0);
+
+console.log(overalBalance2); */
