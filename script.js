@@ -88,35 +88,67 @@ function displayMovements(movements) {
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 }
-displayMovements(accounts[0].movements);
 
 // Display balance
 function displayBalance(movements) {
   const balance = movements.reduce((acc, move) => acc + move, 0);
   labelBalance.textContent = `${balance}$`;
 }
-displayBalance(accounts[0].movements);
 
 // Display summary
-function displaySummary(movements) {
-  const incomes = movements
+function displaySummary(account) {
+  const incomes = account.movements
     .filter((move) => move > 0)
     .reduce((acc, move) => acc + move, 0);
   labelSumIn.textContent = `${incomes}$`;
 
-  const outcomes = movements
+  const outcomes = account.movements
     .filter((move) => move < 0)
     .reduce((acc, move) => acc + move, 0);
   labelSumOut.textContent = `${Math.abs(outcomes)}$`;
 
-  const interest = movements
+  const interest = account.movements
     .filter((move) => move > 0)
-    .map((dep) => (dep * 1.2) / 100)
+    .map((dep) => (dep * account.interestRate) / 100)
     .filter((int) => int >= 1)
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}$`;
 }
-displaySummary(accounts[0].movements);
+
+// Implementing login
+let currentAccount;
+btnLogin.addEventListener("click", (e) => {
+  e.preventDefault(); // Prevent form from submitting
+  currentAccount = accounts.find(
+    (account) => account.username === inputLoginUsername.value
+  );
+
+  if (currentAccount?.password === Number(inputLoginPassword.value)) {
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPassword.value = "";
+    inputLoginPassword.blur();
+    // Display UI and welcome message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(" ")[0]
+    }`;
+    labelWelcome.style.color = "#444";
+    containerApp.style.opacity = 1;
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    displayBalance(currentAccount.movements);
+    // Display summary
+    displaySummary(currentAccount);
+  } else {
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPassword.value = "";
+    inputLoginPassword.blur();
+    // Hide UI and display warning message
+    labelWelcome.textContent = "Incorrect user or password!";
+    labelWelcome.style.color = "tomato";
+    containerApp.style.opacity = 0;
+  }
+});
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
