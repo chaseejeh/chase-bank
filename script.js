@@ -180,9 +180,45 @@ btnTransfer.addEventListener("click", (e) => {
     receiverAccount.movements.push(amount);
     // Update UI
     updateUI(currentAccount);
+    // Display success message
+    labelWelcome.textContent = "Transfer successful!";
+    labelWelcome.style.color = "mediumturquoise";
+  } else {
+    // Display warning message
+    labelWelcome.textContent = "Invalid transfer!";
+    labelWelcome.style.color = "tomato";
   }
 });
 
+// Close account
+btnClose.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePassword.value) === currentAccount.password
+  ) {
+    const index = accounts.findIndex(
+      (account) => account.username === currentAccount.username
+    );
+    // Delete account
+    accounts.splice(index, 1);
+    // Clear fields
+    inputCloseUsername.value = inputClosePassword.value = "";
+    inputClosePassword.blur();
+    // Hide UI and display warning message
+    labelWelcome.textContent = "Account deleted!";
+    labelWelcome.style.color = "mediumturquoise";
+    containerApp.style.opacity = 0;
+  } else {
+    // Clear fields
+    inputCloseUsername.value = inputClosePassword.value = "";
+    inputClosePassword.blur();
+    // Display warning message
+    labelWelcome.textContent = "Action failed!";
+    labelWelcome.style.color = "tomato";
+  }
+});
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 // Lectures
@@ -416,3 +452,11 @@ console.log(account);
 
 const username = accounts.find((account) => account.username === "sr");
 console.log(username); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Find index (returns the first index which is satisfied the codition we provided)
+/////////////////////////////////////////////////////////////
+const arr = [23, 33, 44, 56, 12, 32];
+const firstIndex = arr.findIndex((el) => el >= 50);
+console.log(firstIndex); */
