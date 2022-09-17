@@ -90,9 +90,9 @@ function displayMovements(movements) {
 }
 
 // Display balance
-function displayBalance(movements) {
-  const balance = movements.reduce((acc, move) => acc + move, 0);
-  labelBalance.textContent = `${balance}$`;
+function displayBalance(account) {
+  account.balance = account.movements.reduce((acc, move) => acc + move, 0);
+  labelBalance.textContent = `${account.balance}$`;
 }
 
 // Display summary
@@ -115,6 +115,16 @@ function displaySummary(account) {
   labelSumInterest.textContent = `${interest}$`;
 }
 
+// Update UI
+function updateUI(currentAccount) {
+  // Display movements
+  displayMovements(currentAccount.movements);
+  // Display balance
+  displayBalance(currentAccount);
+  // Display summary
+  displaySummary(currentAccount);
+}
+
 // Implementing login
 let currentAccount;
 btnLogin.addEventListener("click", (e) => {
@@ -133,12 +143,8 @@ btnLogin.addEventListener("click", (e) => {
     }`;
     labelWelcome.style.color = "#444";
     containerApp.style.opacity = 1;
-    // Display movements
-    displayMovements(currentAccount.movements);
-    // Display balance
-    displayBalance(currentAccount.movements);
-    // Display summary
-    displaySummary(currentAccount);
+    // Update UI
+    updateUI(currentAccount);
   } else {
     // Clear input fields
     inputLoginUsername.value = inputLoginPassword.value = "";
@@ -147,6 +153,33 @@ btnLogin.addEventListener("click", (e) => {
     labelWelcome.textContent = "Incorrect user or password!";
     labelWelcome.style.color = "tomato";
     containerApp.style.opacity = 0;
+  }
+});
+
+// Implementing transfers
+btnTransfer.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const receiverAccount = accounts.find(
+    (account) => account.username === inputTransferTo.value
+  );
+  const amount = Number(inputTransferAmount.value);
+
+  // Clear input fields
+  inputTransferTo.value = inputTransferAmount.value = "";
+  inputTransferAmount.blur();
+
+  if (
+    amount > 0 &&
+    amount <= currentAccount.balance &&
+    receiverAccount &&
+    receiverAccount?.username !== currentAccount.username
+  ) {
+    // Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAccount.movements.push(amount);
+    // Update UI
+    updateUI(currentAccount);
   }
 });
 
