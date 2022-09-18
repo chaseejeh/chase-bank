@@ -4,33 +4,39 @@
 const accounts = [
   {
     owner: "Shohanur Rahman",
-    movements: [250, 400, -500, 3000, -700, -150, 50, 1500],
-    interestRate: 1.5, // %
+    movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
+    interestRate: 1.2, // %
     password: 1111,
+    movementsDates: [
+      "2021-11-18T21:31:17.178Z",
+      "2021-12-23T07:42:02.383Z",
+      "2022-01-28T09:15:04.904Z",
+      "2022-04-01T10:17:24.185Z",
+      "2022-05-08T14:11:59.604Z",
+      "2022-05-27T17:01:17.194Z",
+      "2022-07-11T23:36:17.929Z",
+      "2022-07-12T10:51:36.790Z",
+    ],
+    currency: "EUR",
+    locale: "pt-PT", // de-DE
   },
   {
     owner: "Sunerah Binte Ayesha",
-    movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-    interestRate: 1.3,
-    password: 2222,
-  },
-  {
-    owner: "Afrin Tumpa",
-    movements: [430, 1000, 700, 50, 90],
-    interestRate: 1.2,
-    password: 3333,
-  },
-  {
-    owner: "Nibir Ahmed",
     movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-    interestRate: 0.8,
-    password: 4444,
-  },
-  {
-    owner: "Sumaiya Shanta",
-    movements: [2000, 400, -100, -890, -2250, -1000, 2500, -300],
-    interestRate: 1.4,
-    password: 5555,
+    interestRate: 1.5,
+    password: 2222,
+    movementsDates: [
+      "2021-11-01T13:15:33.035Z",
+      "2021-11-30T09:48:16.867Z",
+      "2021-12-25T06:04:23.907Z",
+      "2022-01-25T14:18:46.235Z",
+      "2022-02-05T16:33:06.386Z",
+      "2022-04-10T14:43:26.374Z",
+      "2022-06-25T18:49:59.371Z",
+      "2022-07-26T12:01:20.894Z",
+    ],
+    currency: "USD",
+    locale: "en-US",
   },
 ];
 
