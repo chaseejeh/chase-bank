@@ -73,9 +73,12 @@ function createUsernames(accounts) {
 createUsernames(accounts);
 
 // Display movements
-function displayMovements(movements) {
+function displayMovements(movements, sort = false) {
   containerMovements.innerHTML = "";
-  movements.forEach((move, i) => {
+
+  const moves = sort ? movements.slice(0).sort((a, b) => a - b) : movements;
+
+  moves.forEach((move, i) => {
     const type = move > 0 ? "deposit" : "withdrawal";
     const html = `
     <div class="movements-row">
@@ -129,6 +132,7 @@ function updateUI(currentAccount) {
 let currentAccount;
 btnLogin.addEventListener("click", (e) => {
   e.preventDefault(); // Prevent form from submitting
+
   currentAccount = accounts.find(
     (account) => account.username === inputLoginUsername.value
   );
@@ -190,6 +194,7 @@ btnTransfer.addEventListener("click", (e) => {
 // Implementing loan
 btnLoan.addEventListener("click", (e) => {
   e.preventDefault();
+
   const amount = Number(inputLoanAmount.value);
 
   if (
@@ -238,313 +243,11 @@ btnClose.addEventListener("click", (e) => {
   inputCloseUsername.value = inputClosePassword.value = "";
   inputClosePassword.blur();
 });
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-// Lectures
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-// const currencies = new Map([
-//   ["USD", "United States dollar"],
-//   ["EUR", "Euro"],
-//   ["GBP", "Pound sterling"],
-// ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/* // Slice
-let arr = ["a", "b", "c", "d", "e"];
-console.log(arr.slice(2)); // does not mutate the original array
-console.log(arr);
-console.log(arr.slice(2, 4)); // end parameter is not included in the output
-console.log(arr.slice(-2));
-console.log(arr.slice(-1)); // last element
-console.log(arr.slice(1, -2));
-console.log(arr.slice()); // copying whole array
-console.log([...arr]); // same as above
-
-// Splice
-// console.log(arr.splice(2)); // does mutate the original array
-arr.splice(-1); // remove the last element
-console.log(arr);
-arr.splice(1, 2); // last element is the delete count
-console.log(arr);
-
-// Reverse
-arr = ["a", "b", "c", "d", "e"];
-const arr2 = ["j", "i", "h", "g", "f"];
-console.log(arr2.reverse()); // does mutate the original array
-console.log(arr2);
-
-// Concat
-const letters = arr.concat(arr2); // does not mutate the original array
-console.log(letters);
-console.log([...arr, ...arr2]);
-
-// Join
-console.log(letters.join(" + "));
-
-// Push, unshift, pop, shift, indexOf and includes */
-
-/* // At method
-const arr = [23, 11, 64];
-console.log(arr[0]);
-console.log(arr.at(0)); // ES2022
-console.log(arr[arr.length - 1]); // last element
-console.log(arr.slice(-1)[0]); // last element
-console.log(arr.at(-1)); //  last element
-console.log(arr.at(-2));
-console.log("Shohan".at(0));
-console.log("Shohan".at(-1)); */
-
-/* // forEach
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-for (const [i, movement] of movements.entries()) {
-  if (movement > 0) console.log(`Movement ${i + 1}: You deposited ${movement}`);
-  else console.log(`Movement ${i + 1}: You withdrew: ${Math.abs(movement)}`);
-}
-
-console.log("------- FOREACH -------");
-movements.forEach(function (movement, index, array) {
-  if (movement > 0)
-    console.log(`Movement ${index + 1}: You deposited: ${movement}`);
-  else
-    console.log(`Movement ${index + 1}: You withdrew: ${Math.abs(movement)}`);
+// Sorting
+let sorted = false;
+btnSort.addEventListener("click", (e) => {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
-
-// (element, index, entire array)
-// forEach does not support continue and beak statements
-
-movements.forEach((move, i, arr) => console.log(`${i + 1}: ${move}`)); */
-
-/* // forEach with maps and sets
-// Map
-const currencies = new Map([
-  ["USD", "United States dollar"],
-  ["EUR", "Euro"],
-  ["GBP", "Pound sterling"],
-]);
-
-currencies.forEach((value, key, map) => {
-  console.log(`${key}: ${value}`);
-});
-
-// (value, key, map)
-
-// Set
-const currenciesUnique = new Set(["USD", "BDT", "USD", "EUR", "GBP", "BDT"]);
-console.log(currenciesUnique);
-
-currenciesUnique.forEach((value, _value, map) =>
-  console.log(`${value}: ${value}`)
-);
-
-// Sets do not have any index
-// _value is unneccessary variable
-
-const girls = new Set(["Tumpa", "Ayesha", "Sabrina", "Priya"]);
-
-girls.forEach((girl) => console.log(girl)); */
-
-/* 
-/////////////////////////////////////////////////////////////
-// Map method (returns a new array)
-/////////////////////////////////////////////////////////////
-// (value, index, array)
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const euroToUsd = 1.1;
-const movementsUSD = movements.map((move, index, arr) =>
-  Math.trunc(move * euroToUsd)
-);
-console.log(movementsUSD);
-
-const robbers = [1400, 200, 900, 400, 50, 1200];
-const robbersMap = robbers.map((money) => money / 2);
-console.log(robbersMap); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Filter
-/////////////////////////////////////////////////////////////
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-// Deposits
-// (element, index, entire array)
-const deposits = movements.filter((move) => move > 0); // Returns a new array based on the condition we passed
-console.log(deposits);
-
-// Starts with letter 'S'
-const friends = [
-  "Tumpa",
-  "Ayesha",
-  "Shohan",
-  "Sabrina",
-  "Rimi",
-  "Maisha",
-  "Sumaiya",
-  "Suraiya",
-  "Nibir",
-  "Sarah",
-];
-
-const friendsWithLetterS = friends.filter((friend) => friend.startsWith("S"));
-console.log(friendsWithLetterS);
-
-// Withdrawals
-const withdrawals = movements.filter((move) => move < 0);
-console.log(withdrawals);
-
-// Foods
-const foods = [
-  "Burger",
-  "Pizza",
-  "Pasta",
-  "Noodles",
-  "Ramen",
-  "Fajita",
-  "French Fries",
-];
-
-const foodsWithP = foods.filter((food) => food.startsWith("P"));
-console.log(foodsWithP); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Reduce
-/////////////////////////////////////////////////////////////
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(movements);
-
-// ((accumulator, element, index, entire array), 0)
-// reduce method takes two parameters and the last param is the default value of the accumulator
-const balance = movements.reduce((acc, el) => acc + el, 0);
-console.log(balance);
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const multi = arr.reduce((acc, el) => acc * el, 1);
-console.log(multi);
-
-const arr2 = [3, 7, , 9, 12, 34, 5, 56, 7, 87, 32];
-const add = arr2.reduce((acc, el) => acc + el, 0);
-console.log(add);
-
-// Maximum
-const max = movements.reduce(
-  (acc, move) => (acc > move ? acc : move),
-  movements[0]
-);
-console.log(max);
-
-// Minimum
-const min = movements.reduce(
-  (acc, move) => (acc < move ? acc : move),
-  movements[0]
-);
-console.log(min); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Chaninig methods (Data transformation pipeline)
-/////////////////////////////////////////////////////////////
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-const total = movements
-  .filter((move) => move > 0)
-  .map((move) => move * 1.1)
-  .reduce((acc, move) => acc + move, 0);
-console.log(Math.trunc(total)); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Find method (retrive one element based on the condition)
-/////////////////////////////////////////////////////////////
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const firstWithdrawal = movements.find((move) => move < 0);
-console.log(firstWithdrawal);
-// Returns first element's (not array) value from the array
-
-console.log(accounts);
-
-const account = accounts.find((account) => account.owner === "Afrin Tumpa");
-console.log(account);
-
-const username = accounts.find((account) => account.username === "sr");
-console.log(username); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Find index (returns the first index which is satisfied the codition we provided)
-/////////////////////////////////////////////////////////////
-const arr = [23, 33, 44, 56, 12, 32];
-const firstIndex = arr.findIndex((el) => el >= 50);
-console.log(firstIndex); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Some and every method
-/////////////////////////////////////////////////////////////
-const arr = [2, 3, 4, 5, 1, 3, -2, 9, 43, -23];
-console.log(arr);
-// Equality
-console.log(arr.includes(-2));
-
-// Condition
-const anyPositive = arr.some((el) => el > 40); // If the any element fullfills the condition, the some method returns true
-console.log(anyPositive);
-
-// Every
-// If every elements fullfill the condition, the every method returns true
-const arr2 = [1, 3, 4, 5, 67, 23];
-console.log(arr.every((el) => el > 0));
-console.log(arr2.every((el) => el > 0)); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Flat and flatmap
-/////////////////////////////////////////////////////////////
-const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
-console.log(arr.flat()); // default level is 1
-
-const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
-console.log(arrDeep.flat(2)); // 2 defines the deep level
-
-// Flat
-const overalBalance = accounts
-  .map((account) => account.movements)
-  .flat()
-  .reduce((acc, move) => acc + move, 0);
-
-console.log(overalBalance);
-
-// Flatmap
-const overalBalance2 = accounts
-  .flatMap((account) => account.movements) // map + flat (only goes 1 level deep)
-  .reduce((acc, move) => acc + move, 0);
-
-console.log(overalBalance2); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Sorting arrays
-/////////////////////////////////////////////////////////////
-const owners = ["Jonas", "Adam", "Shohan", "Ayesha"];
-console.log(owners.sort());
-console.log(owners); // sort mutate the original array
-
-const arr = [11, 34, 54, 344, 432, 23, 65, 21];
-// console.log(arr.sort());
-const arrSorted = arr.sort((a, b) => {
-  // return a > b ? 1 : -1; // ascending
-  return a > b ? -1 : 1; // descending
-});
-console.log(arrSorted);
-
-// return < 0, A, B
-// return > 0, B, A
-// 1 means switch, -1 means do not switch
-
-const arr2 = [11, 34, 54, 344, 432, 23, 65, 21];
-// arr2.sort((a, b) => a - b); // ascending
-arr2.sort((a, b) => b - a); // descending
-console.log(arr2); */
