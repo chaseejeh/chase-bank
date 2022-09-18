@@ -523,3 +523,28 @@ const overalBalance2 = accounts
   .reduce((acc, move) => acc + move, 0);
 
 console.log(overalBalance2); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Sorting arrays
+/////////////////////////////////////////////////////////////
+const owners = ["Jonas", "Adam", "Shohan", "Ayesha"];
+console.log(owners.sort());
+console.log(owners); // sort mutate the original array
+
+const arr = [11, 34, 54, 344, 432, 23, 65, 21];
+// console.log(arr.sort());
+const arrSorted = arr.sort((a, b) => {
+  // return a > b ? 1 : -1; // ascending
+  return a > b ? -1 : 1; // descending
+});
+console.log(arrSorted);
+
+// return < 0, A, B
+// return > 0, B, A
+// 1 means switch, -1 means do not switch
+
+const arr2 = [11, 34, 54, 344, 432, 23, 65, 21];
+// arr2.sort((a, b) => a - b); // ascending
+arr2.sort((a, b) => b - a); // descending
+console.log(arr2); */
