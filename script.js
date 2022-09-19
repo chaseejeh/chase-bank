@@ -84,7 +84,6 @@ function formatMovementDate(date) {
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
   const daysPasssed = calcDaysPassed(new Date(), date);
-  console.log(daysPasssed);
 
   if (daysPasssed === 0) return "Today";
   if (daysPasssed === 1) return "Yesterday";
@@ -293,7 +292,7 @@ btnClose.addEventListener("click", (e) => {
 let sorted = false;
 btnSort.addEventListener("click", (e) => {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
 
