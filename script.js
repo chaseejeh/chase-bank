@@ -187,7 +187,7 @@ function updateUI(currentAccount) {
 }
 
 // Implementing login
-let currentAccount;
+let currentAccount, timer;
 
 btnLogin.addEventListener("click", (e) => {
   e.preventDefault();
@@ -218,12 +218,16 @@ btnLogin.addEventListener("click", (e) => {
       options
     ).format(now);
 
+    // Timer
+    if (timer) clearInterval(timer);
+    timer = logOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   } else {
     // Hide UI and display warning message
     labelWelcome.textContent = "Incorrect user or password!";
-    labelWelcome.style.color = "tomato";
+    labelWelcome.style.color = "#f3442a";
     containerApp.style.opacity = 0;
   }
   // Clear input fields
@@ -261,15 +265,19 @@ btnTransfer.addEventListener("click", (e) => {
       updateUI(currentAccount);
       // Display success message
       labelWelcome.textContent = "Transfer successful!";
-      labelWelcome.style.color = "mediumturquoise";
+      labelWelcome.style.color = "#00b79f";
     }, 5000);
   } else {
     setTimeout(() => {
       // Display warning message
       labelWelcome.textContent = "Invalid transfer!";
-      labelWelcome.style.color = "tomato";
+      labelWelcome.style.color = "#f3442a";
     }, 5000);
   }
+
+  // Reset the timer
+  clearInterval(timer);
+  timer = logOutTimer();
 });
 
 // Implementing loan
@@ -291,17 +299,21 @@ btnLoan.addEventListener("click", (e) => {
       updateUI(currentAccount);
       // Display message
       labelWelcome.textContent = "Loan request granted!";
-      labelWelcome.style.color = "mediumturquoise";
+      labelWelcome.style.color = "#00b79f";
     }, 5000);
   } else {
     setTimeout(() => {
       // Display warning message
       labelWelcome.textContent = "Amount not granted!";
-      labelWelcome.style.color = "tomato";
+      labelWelcome.style.color = "#f3442a";
     }, 5000);
   }
   // Clear field
   inputLoanAmount.value = "";
+
+  // Reset the timer
+  clearInterval(timer);
+  timer = logOutTimer();
 });
 
 // Close account
@@ -320,14 +332,14 @@ btnClose.addEventListener("click", (e) => {
       accounts.splice(index, 1);
       // Hide UI and display warning message
       labelWelcome.textContent = "Account deleted!";
-      labelWelcome.style.color = "mediumturquoise";
+      labelWelcome.style.color = "#00b79f";
       containerApp.style.opacity = 0;
     }, 3000);
   } else {
     setTimeout(() => {
       // Display warning message
       labelWelcome.textContent = "Action failed!";
-      labelWelcome.style.color = "tomato";
+      labelWelcome.style.color = "#f3442a";
     }, 3000);
   }
   // Clear fields
@@ -345,320 +357,33 @@ btnSort.addEventListener("click", (e) => {
 
 // Logout timer
 function logOutTimer() {
-  // Set time to 2 minutes
+  labelTimer.textContent = "";
+  // Set timer
+  let time = 180;
+
+  const tickTick = () => {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    // In each call, print the remaining time
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When we reach 0 second, stop timer and log out
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = "You have been logged out!";
+      labelWelcome.style.color = "#f3442a";
+      containerApp.style.opacity = 0;
+    }
+    // Decrease 1s
+    time--;
+  };
+  tickTick();
   // Call the timer every second
-  // In each call, print the remaining time
-  // When we reach 0 second, stop timer and log out
+  timer = setInterval(tickTick, 1000);
+
+  return timer;
 }
 
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/*
-/////////////////////////////////////////////////////////////
-// Converting and checking numbers
-/////////////////////////////////////////////////////////////
-console.log(23 === 23.0);
-// Base 10 - 0 to 9
-// Binary base 2 - 0 to 1
-console.log(0.1 + 0.2);
-console.log(1 / 10);
-console.log(10 / 3);
-console.log(0.1 + 0.2 === 0.3);
-
-// Conversion
-console.log(Number("23"));
-console.log(+"23");
-
-// Parsing
-console.log(Number.parseInt("30px", 10)); // Second param is radix
-console.log(Number.parseInt("es2022", 10));
-console.log(Number.parseInt("  2.5rem   ")); // Number object provides namespace
-console.log(parseFloat(" 2.5rem  ")); // Old school way
-
-// Checking if the value is NaN
-console.log(Number.isNaN(20));
-console.log(Number.isNaN("20"));
-console.log(Number.isNaN(+"20X"));
-console.log(Number.isNaN(23 / 0)); // Infinity
-
-// Checking if the value is number
-console.log(Number.isFinite(20));
-console.log(Number.isFinite("20"));
-console.log(Number.isFinite(+"20px"));
-console.log(Number.isFinite(23 / 0));
-
-console.log(Number.isInteger(23));
-console.log(Number.isInteger(23.0));
-console.log(Number.isInteger(23 / 0)); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Math and rounding
-/////////////////////////////////////////////////////////////
-console.log(Math.sqrt(25));
-console.log(25 ** (1 / 2)); // sqrt
-console.log(8 ** (1 / 3)); // cbrt
-
-console.log(Math.max(5, 80, 12, 56, 98, 1, 24, 56));
-console.log(Math.max(5, 80, 12, "56", "98", 1, 24, 56));
-console.log(Math.max(5, 80, 12, "56px", "98", 1, 24, 56)); // Does not parsing
-console.log(Math.min(5, 80, 12, 56, 98, 1, 24, 56));
-console.log(Math.min(5, 80, 12, 56, 98, 24, 56));
-
-console.log(Math.PI * Number.parseFloat("10px") ** 2);
-console.log(Math.PI * Number.parseFloat("25px") ** 2);
-
-console.log(Math.trunc(Math.random() * 6) + 1);
-
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min) + 1) + min;
-
-console.log(randomInt(10, 20));
-
-// Rounding integers
-console.log(Math.trunc(23.1));
-console.log(Math.trunc(23.9));
-console.log(Math.round(23.1));
-console.log(Math.round(23.9));
-console.log(Math.ceil(23.1));
-console.log(Math.ceil(23.9));
-console.log(Math.floor(23.1));
-console.log(Math.floor("23.9"));
-console.log(Math.trunc(-23.3)); // -23
-console.log(Math.floor(-23.3)); // -24
-
-// Rounding decimals
-console.log((2.34).toFixed(1));
-console.log(+(2.34).toFixed(1));
-console.log(+(2.345345).toFixed(3));
-console.log(+(2.345345).toFixed(0));
-
-console.log(Math.sin(0));
-console.log(Math.sin(1));
-console.log(Math.sin(30));
-console.log(Math.cos(0));
-console.log(Math.cos(90));
-console.log(Math.sin(90)); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Remainder operator
-/////////////////////////////////////////////////////////////
-console.log(5 % 2);
-console.log(5 / 2); // 5 = 2 * 2 + 1
-console.log(8 % 3);
-console.log(8 / 3); // 8 = 2 * 3 + 2
-console.log(6 % 2); // Even
-console.log(6 / 2);
-console.log(7 % 2); // Odd
-console.log(7 / 2);
-
-function isEven(n) {
-  return n % 2 === 0;
-}
-console.log(isEven(8));
-console.log(isEven(23));
-console.log(isEven(56));
-console.log(isEven(59));
-
-labelBalance.addEventListener("click", () => {
-  [...document.querySelectorAll(".movements-row")].forEach((row, i) => {
-    if (i % 2 === 0) {
-      row.style.backgroundColor = "tomato";
-    }
-    if (i % 3 === 0) {
-      row.style.backgroundColor = "teal";
-    }
-  });
-});
- */
-
-/*
-/////////////////////////////////////////////////////////////
-// Numeric separators
-/////////////////////////////////////////////////////////////
-// 287,460,000,000
-const diameter = 287_460_000_000;
-console.log(diameter);
-
-const price = 345_99;
-console.log(price);
-
-const transferFee = 15_00;
-console.log(transferFee);
-
-const PI = 3.14_16;
-console.log(PI);
-
-console.log(Number("23_0000")); // NaN
-console.log(Number.parseInt("23_0000")); // 23 */
-
-/*
-/////////////////////////////////////////////////////////////
-// BigInt (ES2020)
-/////////////////////////////////////////////////////////////
-// 64-bits number system
-console.log(2 ** 53 - 1);
-console.log(Number.MAX_SAFE_INTEGER);
-console.log(2 ** 53 + 1);
-console.log(2 ** 53 + 2);
-console.log(2 ** 53 + 3);
-console.log(2 ** 53 + 4);
-console.log(2 ** 53 + 5);
-
-console.log(456465454654684844564654646464n); // regular number into bigInt
-console.log(BigInt(46546465464654646464654646464444));
-
-// Operations
-console.log(100000n + 100000n);
-console.log(64684848854541544444n * 4654164654646n);
-const huge = 455454545454545454545544n;
-const num = 23;
-// console.log(huge * num); // Error
-console.log(huge * BigInt(num));
-console.log(20n > 15);
-console.log(20n === 20); // flase, different premitive type
-console.log(typeof 20n);
-console.log(20n == 20); // true, type coercion
-console.log(20n == "20"); // true, type coercion
-console.log(huge + " is really big");
-// console.log(Math.sqrt(16n)); // error
-console.log(10n / 3n); // 3n
-console.log(10 / 3);
-console.log(11n / 3n); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Creating dates
-/////////////////////////////////////////////////////////////
-const now = new Date();
-console.log(now);
-
-console.log(new Date("Sep 19 2022 13:54:15"));
-console.log(new Date("September 20, 2021"));
-console.log(new Date(accounts[0].movementsDates[0])); // Z = time zone
-console.log(new Date(2022, 10, 19, 15, 23, 5)); // month is 0 based
-console.log(new Date(2037, 10, 31)); // month is 0 based
-console.log(new Date(2037, 10, 33)); // month is 0 based
-
-console.log(new Date(0));
-console.log(new Date(3 * 24 * 60 * 60 * 1000)); // timestamp
-
-// Working with dates
-const future = new Date(2037, 10, 19, 15, 23);
-console.log(future);
-console.log(future.getFullYear()); // always use getFullYear()
-console.log(future.getMonth());
-console.log(future.getDate());
-console.log(future.getDay()); // mon = 0
-console.log(future.getHours());
-console.log(future.getMinutes());
-console.log(future.getSeconds());
-console.log(future.toISOString());
-console.log(future.getTime()); // get timestamps
-console.log(new Date(2142235380000));
-console.log(Date.now()); // current timestamps
-future.setFullYear(2045);
-console.log(future); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Operation with dates
-/////////////////////////////////////////////////////////////
-const future = new Date(2037, 10, 19, 15, 23);
-console.log(Number(future));
-console.log(+future);
-
-const calcDaysPassed = (date1, date2) =>
-  Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
-
-const days1 = calcDaysPassed(
-  new Date(2037, 3, 14, 10, 4),
-  new Date(2037, 3, 4)
-);
-console.log(days1);
- */
-
-/*
-/////////////////////////////////////////////////////////////
-// Intl date and time
-/////////////////////////////////////////////////////////////
-const now = new Date();
-// console.log(now);
-const options = {
-  weekday: "short",
-  month: "short",
-  date: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-};
-const dateTime = new Intl.DateTimeFormat("bn-BD", options).format(now);
-console.log(dateTime); */
-
-/*
-/////////////////////////////////////////////////////////////
-// Intl numbers
-/////////////////////////////////////////////////////////////
-const num = 3884764.23;
-
-const options = {
-  // style: "unit",
-  // style: "percent",
-  style: "currency",
-  // unit: "mile-per-hour",
-  // unit: "celsius",
-  currency: "BDT",
-  // useGrouping: false,
-};
-
-console.log("US: ", new Intl.NumberFormat("en-US", options).format(num));
-console.log("Germany: ", new Intl.NumberFormat("de-DE", options).format(num));
-console.log("Syria: ", new Intl.NumberFormat("ar-SY", options).format(num));
-console.log(
-  "Bangladesh: ",
-  new Intl.NumberFormat("bn-BD", options).format(num)
-);
-console.log(
-  navigator.language,
-  new Intl.NumberFormat(navigator.language, options).format(num)
-); */
-
-/*
-/////////////////////////////////////////////////////////////
-// setTimeout
-/////////////////////////////////////////////////////////////
-const ing = ["Olives", "Tomato"];
-const pizzaTimer = setTimeout(
-  (ing1, ing2) =>
-    console.log(`Here is your pizza with ${ing1} and ${ing2}. 🍕`),
-  3000,
-  ...ing
-); // 3000ms
-console.log("Waiting...");
-
-if (ing.includes("Spinach")) clearTimeout(pizzaTimer);
-
-const colors = ["crimson", "tomato"];
-const printPaper = setTimeout(
-  (col1, col2) =>
-    console.log(`Here is your printed paper with ${col1} and ${col2}.`),
-  5000,
-  ...colors
-);
-
-if (colors.includes("black")) {
-  clearTimeout(printPaper);
-} */
-
-/*
-/////////////////////////////////////////////////////////////
-// setInterval
-/////////////////////////////////////////////////////////////
-setInterval(() => {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
-  console.log(`${hours}:${minutes}:${seconds}`);
-}, 1000); // execute every seconds */
+// Copyright year
+document.querySelector(".copyright-year").textContent =
+  new Date().getFullYear();

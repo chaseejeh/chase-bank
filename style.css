@@ -141,11 +141,11 @@ nav {
 }
 
 .movements-type-deposit {
-  background-color: mediumturquoise;
+  background-color: #00b79f;
 }
 
 .movements-type-withdrawal {
-  background-color: tomato;
+  background-color: #f3442a;
 }
 
 .movements-value {
@@ -175,11 +175,11 @@ nav {
 
 .summary-value-in,
 .summary-value-interest {
-  color: mediumturquoise;
+  color: #00b79f;
 }
 
 .summary-value-out {
-  color: tomato;
+  color: #f3442a;
 }
 
 .btn-sort {
@@ -199,15 +199,15 @@ nav {
 }
 
 .operation-transfer {
-  background-color: mediumturquoise;
+  background-color: #00b79f;
 }
 
 .operation-loan {
-  background-color: tomato;
+  background-color: #f3442a;
 }
 
 .operation-close {
-  background-color: mediumpurple;
+  background-color: #fdb850;
 }
 
 h2 {
