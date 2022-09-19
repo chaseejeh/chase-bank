@@ -79,18 +79,28 @@ function createUsernames(accounts) {
 createUsernames(accounts);
 
 // Display movements
-function displayMovements(movements, sort = false) {
+function displayMovements(account, sort = false) {
   containerMovements.innerHTML = "";
 
-  const moves = sort ? movements.slice(0).sort((a, b) => a - b) : movements;
+  const moves = sort
+    ? account.movements.slice(0).sort((a, b) => a - b)
+    : account.movements;
 
   moves.forEach((move, i) => {
     const type = move > 0 ? "deposit" : "withdrawal";
+
+    const date = new Date(account.movementsDates[i]);
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    const displayDate = `${day}/${month}/${year}`;
+
     const html = `
     <div class="movements-row">
         <div class="movements-type movements-type-${type}">${
       i + 1
     } ${type}(s)</div>
+        <div class="movements-date">${displayDate}</div>
         <div class="movements-value">${move.toFixed(2)}$</div>
     </div>
     `;
@@ -127,7 +137,7 @@ function displaySummary(account) {
 // Update UI
 function updateUI(currentAccount) {
   // Display movements
-  displayMovements(currentAccount.movements);
+  displayMovements(currentAccount);
   // Display balance
   displayBalance(currentAccount);
   // Display summary
@@ -136,6 +146,7 @@ function updateUI(currentAccount) {
 
 // Implementing login
 let currentAccount;
+
 btnLogin.addEventListener("click", (e) => {
   e.preventDefault(); // Prevent form from submitting
 
@@ -150,6 +161,16 @@ btnLogin.addEventListener("click", (e) => {
     }`;
     labelWelcome.style.color = "#444";
     containerApp.style.opacity = 1;
+
+    // Create current date and time
+    const now = new Date();
+    const day = `${now.getDate()}`.padStart(2, 0);
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const year = now.getFullYear();
+    const hour = `${now.getHours()}`.padStart(2, 0);
+    const min = `${now.getMinutes()}`.padStart(2, 0);
+    labelDate.textContent = `${day}/${month}/${year}, ${hour}: ${min}`;
+
     // Update UI
     updateUI(currentAccount);
   } else {
@@ -185,6 +206,9 @@ btnTransfer.addEventListener("click", (e) => {
     // Doing the transfer
     currentAccount.movements.push(-amount);
     receiverAccount.movements.push(amount);
+    // Add transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
     // Display success message
@@ -209,6 +233,8 @@ btnLoan.addEventListener("click", (e) => {
   ) {
     // Add movement
     currentAccount.movements.push(amount);
+    // Add loan date
+    currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
     // Display message
@@ -346,3 +372,124 @@ console.log(Math.sin(30));
 console.log(Math.cos(0));
 console.log(Math.cos(90));
 console.log(Math.sin(90)); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Remainder operator
+/////////////////////////////////////////////////////////////
+console.log(5 % 2);
+console.log(5 / 2); // 5 = 2 * 2 + 1
+console.log(8 % 3);
+console.log(8 / 3); // 8 = 2 * 3 + 2
+console.log(6 % 2); // Even
+console.log(6 / 2);
+console.log(7 % 2); // Odd
+console.log(7 / 2);
+
+function isEven(n) {
+  return n % 2 === 0;
+}
+console.log(isEven(8));
+console.log(isEven(23));
+console.log(isEven(56));
+console.log(isEven(59));
+
+labelBalance.addEventListener("click", () => {
+  [...document.querySelectorAll(".movements-row")].forEach((row, i) => {
+    if (i % 2 === 0) {
+      row.style.backgroundColor = "tomato";
+    }
+    if (i % 3 === 0) {
+      row.style.backgroundColor = "teal";
+    }
+  });
+});
+ */
+
+/*
+/////////////////////////////////////////////////////////////
+// Numeric separators
+/////////////////////////////////////////////////////////////
+// 287,460,000,000
+const diameter = 287_460_000_000;
+console.log(diameter);
+
+const price = 345_99;
+console.log(price);
+
+const transferFee = 15_00;
+console.log(transferFee);
+
+const PI = 3.14_16;
+console.log(PI);
+
+console.log(Number("23_0000")); // NaN
+console.log(Number.parseInt("23_0000")); // 23 */
+
+/*
+/////////////////////////////////////////////////////////////
+// BigInt (ES2020)
+/////////////////////////////////////////////////////////////
+// 64-bits number system
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(2 ** 53 + 1);
+console.log(2 ** 53 + 2);
+console.log(2 ** 53 + 3);
+console.log(2 ** 53 + 4);
+console.log(2 ** 53 + 5);
+
+console.log(456465454654684844564654646464n); // regular number into bigInt
+console.log(BigInt(46546465464654646464654646464444));
+
+// Operations
+console.log(100000n + 100000n);
+console.log(64684848854541544444n * 4654164654646n);
+const huge = 455454545454545454545544n;
+const num = 23;
+// console.log(huge * num); // Error
+console.log(huge * BigInt(num));
+console.log(20n > 15);
+console.log(20n === 20); // flase, different premitive type
+console.log(typeof 20n);
+console.log(20n == 20); // true, type coercion
+console.log(20n == "20"); // true, type coercion
+console.log(huge + " is really big");
+// console.log(Math.sqrt(16n)); // error
+console.log(10n / 3n); // 3n
+console.log(10 / 3);
+console.log(11n / 3n); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Creating dates
+/////////////////////////////////////////////////////////////
+const now = new Date();
+console.log(now);
+
+console.log(new Date("Sep 19 2022 13:54:15"));
+console.log(new Date("September 20, 2021"));
+console.log(new Date(accounts[0].movementsDates[0])); // Z = time zone
+console.log(new Date(2022, 10, 19, 15, 23, 5)); // month is 0 based
+console.log(new Date(2037, 10, 31)); // month is 0 based
+console.log(new Date(2037, 10, 33)); // month is 0 based
+
+console.log(new Date(0));
+console.log(new Date(3 * 24 * 60 * 60 * 1000)); // timestamp
+
+// Working with dates
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear()); // always use getFullYear()
+console.log(future.getMonth());
+console.log(future.getDate());
+console.log(future.getDay()); // mon = 0
+console.log(future.getHours());
+console.log(future.getMinutes());
+console.log(future.getSeconds());
+console.log(future.toISOString());
+console.log(future.getTime()); // get timestamps
+console.log(new Date(2142235380000));
+console.log(Date.now()); // current timestamps
+future.setFullYear(2045);
+console.log(future); */
