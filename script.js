@@ -92,6 +92,14 @@ function formatMovementDate(date, locale) {
   return new Intl.DateTimeFormat(locale).format(date);
 }
 
+// Formatting currencies
+function formatCurrency(value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  }).format(value);
+}
+
 // Display movements
 function displayMovements(account, sort = false) {
   containerMovements.innerHTML = "";
@@ -106,13 +114,19 @@ function displayMovements(account, sort = false) {
     const date = new Date(account.movementsDates[i]);
     const displayDate = formatMovementDate(date, account.locale);
 
+    const formattedMove = formatCurrency(
+      move,
+      account.locale,
+      account.currency
+    );
+
     const html = `
     <div class="movements-row">
         <div class="movements-type movements-type-${type}">${
       i + 1
     } ${type}(s)</div>
         <div class="movements-date">${displayDate}</div>
-        <div class="movements-value">${move.toFixed(2)}$</div>
+        <div class="movements-value">${formattedMove}</div>
     </div>
     `;
     containerMovements.insertAdjacentHTML("afterbegin", html);
@@ -122,7 +136,12 @@ function displayMovements(account, sort = false) {
 // Display balance
 function displayBalance(account) {
   account.balance = account.movements.reduce((acc, move) => acc + move, 0);
-  labelBalance.textContent = `${account.balance.toFixed(2)}$`;
+
+  labelBalance.textContent = formatCurrency(
+    account.balance,
+    account.locale,
+    account.currency
+  );
 }
 
 // Display summary
@@ -130,19 +149,31 @@ function displaySummary(account) {
   const incomes = account.movements
     .filter((move) => move > 0)
     .reduce((acc, move) => acc + move, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}$`;
+  labelSumIn.textContent = formatCurrency(
+    incomes,
+    account.locale,
+    account.currency
+  );
 
   const outcomes = account.movements
     .filter((move) => move < 0)
     .reduce((acc, move) => acc + move, 0);
-  labelSumOut.textContent = `${Math.abs(outcomes).toFixed(2)}$`;
+  labelSumOut.textContent = formatCurrency(
+    Math.abs(outcomes),
+    account.locale,
+    account.currency
+  );
 
   const interest = account.movements
     .filter((move) => move > 0)
     .map((dep) => (dep * account.interestRate) / 100)
     .filter((int) => int >= 1)
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest.toFixed(2)}$`;
+  labelSumInterest.textContent = formatCurrency(
+    interest,
+    account.locale,
+    account.currency
+  );
 }
 
 // Update UI
@@ -219,21 +250,25 @@ btnTransfer.addEventListener("click", (e) => {
     receiverAccount &&
     receiverAccount?.username !== currentAccount.username
   ) {
-    // Doing the transfer
-    currentAccount.movements.push(-amount);
-    receiverAccount.movements.push(amount);
-    // Add transfer date
-    currentAccount.movementsDates.push(new Date().toISOString());
-    receiverAccount.movementsDates.push(new Date().toISOString());
-    // Update UI
-    updateUI(currentAccount);
-    // Display success message
-    labelWelcome.textContent = "Transfer successful!";
-    labelWelcome.style.color = "mediumturquoise";
+    setTimeout(() => {
+      // Doing the transfer
+      currentAccount.movements.push(-amount);
+      receiverAccount.movements.push(amount);
+      // Add transfer date
+      currentAccount.movementsDates.push(new Date().toISOString());
+      receiverAccount.movementsDates.push(new Date().toISOString());
+      // Update UI
+      updateUI(currentAccount);
+      // Display success message
+      labelWelcome.textContent = "Transfer successful!";
+      labelWelcome.style.color = "mediumturquoise";
+    }, 5000);
   } else {
-    // Display warning message
-    labelWelcome.textContent = "Invalid transfer!";
-    labelWelcome.style.color = "tomato";
+    setTimeout(() => {
+      // Display warning message
+      labelWelcome.textContent = "Invalid transfer!";
+      labelWelcome.style.color = "tomato";
+    }, 5000);
   }
 });
 
@@ -247,19 +282,23 @@ btnLoan.addEventListener("click", (e) => {
     amount > 0 &&
     currentAccount.movements.some((move) => move >= amount * 0.1)
   ) {
-    // Add movement
-    currentAccount.movements.push(amount);
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
-    // Update UI
-    updateUI(currentAccount);
-    // Display message
-    labelWelcome.textContent = "Loan request granted!";
-    labelWelcome.style.color = "mediumturquoise";
+    setTimeout(() => {
+      // Add movement
+      currentAccount.movements.push(amount);
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
+      // Update UI
+      updateUI(currentAccount);
+      // Display message
+      labelWelcome.textContent = "Loan request granted!";
+      labelWelcome.style.color = "mediumturquoise";
+    }, 5000);
   } else {
-    // Display warning message
-    labelWelcome.textContent = "Amount not granted!";
-    labelWelcome.style.color = "tomato";
+    setTimeout(() => {
+      // Display warning message
+      labelWelcome.textContent = "Amount not granted!";
+      labelWelcome.style.color = "tomato";
+    }, 5000);
   }
   // Clear field
   inputLoanAmount.value = "";
@@ -276,16 +315,20 @@ btnClose.addEventListener("click", (e) => {
     const index = accounts.findIndex(
       (account) => account.username === currentAccount.username
     );
-    // Delete account
-    accounts.splice(index, 1);
-    // Hide UI and display warning message
-    labelWelcome.textContent = "Account deleted!";
-    labelWelcome.style.color = "mediumturquoise";
-    containerApp.style.opacity = 0;
+    setTimeout(() => {
+      // Delete account
+      accounts.splice(index, 1);
+      // Hide UI and display warning message
+      labelWelcome.textContent = "Account deleted!";
+      labelWelcome.style.color = "mediumturquoise";
+      containerApp.style.opacity = 0;
+    }, 3000);
   } else {
-    // Display warning message
-    labelWelcome.textContent = "Action failed!";
-    labelWelcome.style.color = "tomato";
+    setTimeout(() => {
+      // Display warning message
+      labelWelcome.textContent = "Action failed!";
+      labelWelcome.style.color = "tomato";
+    }, 3000);
   }
   // Clear fields
   inputCloseUsername.value = inputClosePassword.value = "";
@@ -299,6 +342,14 @@ btnSort.addEventListener("click", (e) => {
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
+
+// Logout timer
+function logOutTimer() {
+  // Set time to 2 minutes
+  // Call the timer every second
+  // In each call, print the remaining time
+  // When we reach 0 second, stop timer and log out
+}
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -527,3 +578,87 @@ const days1 = calcDaysPassed(
 );
 console.log(days1);
  */
+
+/*
+/////////////////////////////////////////////////////////////
+// Intl date and time
+/////////////////////////////////////////////////////////////
+const now = new Date();
+// console.log(now);
+const options = {
+  weekday: "short",
+  month: "short",
+  date: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+};
+const dateTime = new Intl.DateTimeFormat("bn-BD", options).format(now);
+console.log(dateTime); */
+
+/*
+/////////////////////////////////////////////////////////////
+// Intl numbers
+/////////////////////////////////////////////////////////////
+const num = 3884764.23;
+
+const options = {
+  // style: "unit",
+  // style: "percent",
+  style: "currency",
+  // unit: "mile-per-hour",
+  // unit: "celsius",
+  currency: "BDT",
+  // useGrouping: false,
+};
+
+console.log("US: ", new Intl.NumberFormat("en-US", options).format(num));
+console.log("Germany: ", new Intl.NumberFormat("de-DE", options).format(num));
+console.log("Syria: ", new Intl.NumberFormat("ar-SY", options).format(num));
+console.log(
+  "Bangladesh: ",
+  new Intl.NumberFormat("bn-BD", options).format(num)
+);
+console.log(
+  navigator.language,
+  new Intl.NumberFormat(navigator.language, options).format(num)
+); */
+
+/*
+/////////////////////////////////////////////////////////////
+// setTimeout
+/////////////////////////////////////////////////////////////
+const ing = ["Olives", "Tomato"];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) =>
+    console.log(`Here is your pizza with ${ing1} and ${ing2}. 🍕`),
+  3000,
+  ...ing
+); // 3000ms
+console.log("Waiting...");
+
+if (ing.includes("Spinach")) clearTimeout(pizzaTimer);
+
+const colors = ["crimson", "tomato"];
+const printPaper = setTimeout(
+  (col1, col2) =>
+    console.log(`Here is your printed paper with ${col1} and ${col2}.`),
+  5000,
+  ...colors
+);
+
+if (colors.includes("black")) {
+  clearTimeout(printPaper);
+} */
+
+/*
+/////////////////////////////////////////////////////////////
+// setInterval
+/////////////////////////////////////////////////////////////
+setInterval(() => {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+  console.log(`${hours}:${minutes}:${seconds}`);
+}, 1000); // execute every seconds */
