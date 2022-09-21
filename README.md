@@ -1,3 +1,9 @@
-### Login Credentials
+## Spectra Bank - Login Details
 
-(Username, Password): (sr, 1111), (sba, 2222)
+### Account 1:
+
+Username: sr, Password: 1234
+
+### Account 2:
+
+Username: sba, Password: 5678
