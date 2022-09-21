@@ -1,46 +1,56 @@
 "use strict";
 
+/////////////////////////////////////////////////////////////
 // Data
+/////////////////////////////////////////////////////////////
+
 const accounts = [
   {
     owner: "Shohanur Rahman",
-    movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
-    interestRate: 1.2,
-    password: 1111,
+    movements: [2500, 500, -750, 1200, 3200, -1500, 500, 1200, -1750, 1800],
+    interestRate: 1.5, // %
+    password: 1234,
     movementsDates: [
       "2021-11-18T21:31:17.178Z",
       "2021-12-23T07:42:02.383Z",
       "2022-01-28T09:15:04.904Z",
       "2022-04-01T10:17:24.185Z",
-      "2022-05-08T14:11:59.604Z",
-      "2022-09-12T17:01:17.194Z",
-      "2022-09-15T23:36:17.929Z",
-      "2022-09-18T10:51:36.790Z",
-    ],
-    currency: "BDT",
-    locale: "bn-BD",
-  },
-  {
-    owner: "Sunerah Binte Ayesha",
-    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-    interestRate: 1.5,
-    password: 2222,
-    movementsDates: [
-      "2021-11-01T13:15:33.035Z",
-      "2021-11-30T09:48:16.867Z",
-      "2021-12-25T06:04:23.907Z",
-      "2022-01-25T14:18:46.235Z",
-      "2022-02-05T16:33:06.386Z",
-      "2022-04-10T14:43:26.374Z",
-      "2022-06-25T18:49:59.371Z",
-      "2022-07-26T12:01:20.894Z",
+      "2022-07-08T14:11:59.604Z",
+      "2022-09-10T17:01:17.194Z",
+      "2022-09-12T23:36:17.929Z",
+      "2022-09-15T12:51:31.398Z",
+      "2022-09-19T06:41:26.190Z",
+      "2022-09-21T08:11:36.678Z",
     ],
     currency: "USD",
     locale: "en-US",
   },
+  {
+    owner: "Sunerah Binte Ayesha",
+    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -300, 1500, -1850],
+    interestRate: 1.3, // %
+    password: 5678,
+    movementsDates: [
+      "2021-12-11T21:31:17.671Z",
+      "2021-12-27T07:42:02.184Z",
+      "2022-01-05T09:15:04.805Z",
+      "2022-02-14T10:17:24.687Z",
+      "2022-03-12T14:11:59.203Z",
+      "2022-05-16T17:01:17.392Z",
+      "2022-08-10T23:36:17.522Z",
+      "2022-09-03T12:51:31.491Z",
+      "2022-09-18T06:41:26.394Z",
+      "2022-09-21T08:11:36.276Z",
+    ],
+    currency: "EUR",
+    locale: "en-GB",
+  },
 ];
 
+/////////////////////////////////////////////////////////////
 // Elements
+/////////////////////////////////////////////////////////////
+
 const labelWelcome = document.querySelector(".welcome");
 const labelDate = document.querySelector(".date");
 const labelBalance = document.querySelector(".balance-value");
@@ -66,7 +76,10 @@ const inputLoanAmount = document.querySelector(".form-input-loan-amount");
 const inputCloseUsername = document.querySelector(".form-input-username");
 const inputClosePassword = document.querySelector(".form-input-password");
 
+/////////////////////////////////////////////////////////////
 // Create usernames
+/////////////////////////////////////////////////////////////
+
 function createUsernames(accounts) {
   accounts.forEach((account) => {
     account.username = account.owner
@@ -78,7 +91,10 @@ function createUsernames(accounts) {
 }
 createUsernames(accounts);
 
+/////////////////////////////////////////////////////////////
 // Days calculation
+/////////////////////////////////////////////////////////////
+
 function formatMovementDate(date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -92,7 +108,10 @@ function formatMovementDate(date, locale) {
   return new Intl.DateTimeFormat(locale).format(date);
 }
 
+/////////////////////////////////////////////////////////////
 // Formatting currencies
+/////////////////////////////////////////////////////////////
+
 function formatCurrency(value, locale, currency) {
   return new Intl.NumberFormat(locale, {
     style: "currency",
@@ -100,7 +119,10 @@ function formatCurrency(value, locale, currency) {
   }).format(value);
 }
 
+/////////////////////////////////////////////////////////////
 // Display movements
+/////////////////////////////////////////////////////////////
+
 function displayMovements(account, sort = false) {
   containerMovements.innerHTML = "";
 
@@ -124,16 +146,20 @@ function displayMovements(account, sort = false) {
     <div class="movements-row">
         <div class="movements-type movements-type-${type}">${
       i + 1
-    } ${type}(s)</div>
+    } ${type}</div>
         <div class="movements-date">${displayDate}</div>
         <div class="movements-value">${formattedMove}</div>
     </div>
     `;
+
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 }
 
+/////////////////////////////////////////////////////////////
 // Display balance
+/////////////////////////////////////////////////////////////
+
 function displayBalance(account) {
   account.balance = account.movements.reduce((acc, move) => acc + move, 0);
 
@@ -144,11 +170,15 @@ function displayBalance(account) {
   );
 }
 
+/////////////////////////////////////////////////////////////
 // Display summary
+/////////////////////////////////////////////////////////////
+
 function displaySummary(account) {
   const incomes = account.movements
     .filter((move) => move > 0)
     .reduce((acc, move) => acc + move, 0);
+
   labelSumIn.textContent = formatCurrency(
     incomes,
     account.locale,
@@ -158,6 +188,7 @@ function displaySummary(account) {
   const outcomes = account.movements
     .filter((move) => move < 0)
     .reduce((acc, move) => acc + move, 0);
+
   labelSumOut.textContent = formatCurrency(
     Math.abs(outcomes),
     account.locale,
@@ -169,6 +200,7 @@ function displaySummary(account) {
     .map((dep) => (dep * account.interestRate) / 100)
     .filter((int) => int >= 1)
     .reduce((acc, int) => acc + int, 0);
+
   labelSumInterest.textContent = formatCurrency(
     interest,
     account.locale,
@@ -176,7 +208,10 @@ function displaySummary(account) {
   );
 }
 
+/////////////////////////////////////////////////////////////
 // Update UI
+/////////////////////////////////////////////////////////////
+
 function updateUI(currentAccount) {
   // Display movements
   displayMovements(currentAccount);
@@ -186,7 +221,10 @@ function updateUI(currentAccount) {
   displaySummary(currentAccount);
 }
 
+/////////////////////////////////////////////////////////////
 // Implementing login
+/////////////////////////////////////////////////////////////
+
 let currentAccount, timer;
 
 btnLogin.addEventListener("click", (e) => {
@@ -213,6 +251,7 @@ btnLogin.addEventListener("click", (e) => {
       month: "numeric",
       year: "numeric",
     };
+
     labelDate.textContent = new Intl.DateTimeFormat(
       currentAccount.locale,
       options
@@ -230,12 +269,16 @@ btnLogin.addEventListener("click", (e) => {
     labelWelcome.style.color = "#f3442a";
     containerApp.style.opacity = 0;
   }
+
   // Clear input fields
   inputLoginUsername.value = inputLoginPassword.value = "";
   inputLoginPassword.blur();
 });
 
+/////////////////////////////////////////////////////////////
 // Implementing transfers
+/////////////////////////////////////////////////////////////
+
 btnTransfer.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -258,11 +301,14 @@ btnTransfer.addEventListener("click", (e) => {
       // Doing the transfer
       currentAccount.movements.push(-amount);
       receiverAccount.movements.push(amount);
+
       // Add transfer date
       currentAccount.movementsDates.push(new Date().toISOString());
       receiverAccount.movementsDates.push(new Date().toISOString());
+
       // Update UI
       updateUI(currentAccount);
+
       // Display success message
       labelWelcome.textContent = "Transfer successful!";
       labelWelcome.style.color = "#00b79f";
@@ -280,7 +326,10 @@ btnTransfer.addEventListener("click", (e) => {
   timer = logOutTimer();
 });
 
+/////////////////////////////////////////////////////////////
 // Implementing loan
+/////////////////////////////////////////////////////////////
+
 btnLoan.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -293,10 +342,13 @@ btnLoan.addEventListener("click", (e) => {
     setTimeout(() => {
       // Add movement
       currentAccount.movements.push(amount);
+
       // Add loan date
       currentAccount.movementsDates.push(new Date().toISOString());
+
       // Update UI
       updateUI(currentAccount);
+
       // Display message
       labelWelcome.textContent = "Loan request granted!";
       labelWelcome.style.color = "#00b79f";
@@ -308,6 +360,7 @@ btnLoan.addEventListener("click", (e) => {
       labelWelcome.style.color = "#f3442a";
     }, 5000);
   }
+
   // Clear field
   inputLoanAmount.value = "";
 
@@ -316,7 +369,10 @@ btnLoan.addEventListener("click", (e) => {
   timer = logOutTimer();
 });
 
+/////////////////////////////////////////////////////////////
 // Close account
+/////////////////////////////////////////////////////////////
+
 btnClose.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -330,6 +386,7 @@ btnClose.addEventListener("click", (e) => {
     setTimeout(() => {
       // Delete account
       accounts.splice(index, 1);
+
       // Hide UI and display warning message
       labelWelcome.textContent = "Account deleted!";
       labelWelcome.style.color = "#00b79f";
@@ -342,28 +399,38 @@ btnClose.addEventListener("click", (e) => {
       labelWelcome.style.color = "#f3442a";
     }, 3000);
   }
+
   // Clear fields
   inputCloseUsername.value = inputClosePassword.value = "";
   inputClosePassword.blur();
 });
 
+/////////////////////////////////////////////////////////////
 // Sorting
+/////////////////////////////////////////////////////////////
+
 let sorted = false;
+
 btnSort.addEventListener("click", (e) => {
   e.preventDefault();
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
 
+/////////////////////////////////////////////////////////////
 // Logout timer
+/////////////////////////////////////////////////////////////
+
 function logOutTimer() {
   labelTimer.textContent = "";
+
   // Set timer
   let time = 180;
 
   const tickTick = () => {
     const min = String(Math.trunc(time / 60)).padStart(2, 0);
     const sec = String(time % 60).padStart(2, 0);
+
     // In each call, print the remaining time
     labelTimer.textContent = `${min}:${sec}`;
 
@@ -374,16 +441,22 @@ function logOutTimer() {
       labelWelcome.style.color = "#f3442a";
       containerApp.style.opacity = 0;
     }
+
     // Decrease 1s
     time--;
   };
+
   tickTick();
+
   // Call the timer every second
   timer = setInterval(tickTick, 1000);
 
   return timer;
 }
 
+/////////////////////////////////////////////////////////////
 // Copyright year
+/////////////////////////////////////////////////////////////
+
 document.querySelector(".copyright-year").textContent =
   new Date().getFullYear();
