@@ -363,6 +363,7 @@ btnLoan.addEventListener("click", (e) => {
 
   // Clear field
   inputLoanAmount.value = "";
+  inputLoanAmount.blur();
 
   // Reset the timer
   clearInterval(timer);
