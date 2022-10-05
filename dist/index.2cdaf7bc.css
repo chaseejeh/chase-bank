@@ -1,0 +1,282 @@
+* {
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: #444;
+  height: 100vh;
+  background-color: #f3f3f3;
+  padding: 2rem;
+  font-family: Poppins, sans-serif;
+}
+
+nav {
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  display: flex;
+}
+
+.welcome {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.logo {
+  height: 5rem;
+}
+
+.login {
+  display: flex;
+}
+
+.login-input {
+  text-align: center;
+  width: 15rem;
+  color: inherit;
+  border: 1px solid #fff;
+  border-radius: 10rem;
+  margin-right: 1rem;
+  padding: .5rem 2rem;
+  font-family: inherit;
+  font-size: 1.6rem;
+  transition: all .3s;
+}
+
+.login-input:focus {
+  border-color: #ccc;
+}
+
+.login-input::placeholder {
+  color: #bbb;
+}
+
+.login-btn {
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  font-size: 2rem;
+  transition: all .3s;
+}
+
+.login-btn:hover, .login-btn:focus, .btn-sort:focus, .btn-sort:hover {
+  color: #777;
+}
+
+.app {
+  max-width: 100rem;
+  opacity: 0;
+  grid-template-rows: auto repeat(3, 15rem) auto;
+  grid-template-columns: 4fr 3fr;
+  gap: 2rem;
+  margin: 4rem auto;
+  transition: all .3s;
+  display: grid;
+  position: relative;
+}
+
+.balance {
+  grid-column: 1 / span 2;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+.balance-label {
+  margin-bottom: -.2rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.balance-date {
+  color: #888;
+  font-size: 1.4rem;
+}
+
+.balance-value {
+  font-size: 4.5rem;
+  font-weight: 400;
+}
+
+.movements {
+  background-color: #fff;
+  grid-row: 2 / span 3;
+  overflow-y: scroll;
+}
+
+.movements-row {
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  padding: 2.25rem 4rem;
+  display: flex;
+}
+
+.movements-type {
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 10rem;
+  margin-right: 2rem;
+  padding: .1rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.movements-date {
+  text-transform: uppercase;
+  color: #666;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.movements-type-deposit {
+  background-color: #00b79f;
+}
+
+.movements-type-withdrawal {
+  background-color: #f3442a;
+}
+
+.movements-value {
+  margin-left: auto;
+  font-size: 1.7rem;
+}
+
+.summary {
+  grid-row: 5 / 6;
+  align-items: baseline;
+  margin-top: 1rem;
+  padding: 0 .3rem;
+  display: flex;
+}
+
+.summary-label {
+  text-transform: uppercase;
+  margin-right: .8rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.summary-value {
+  margin-right: 2.5rem;
+  font-size: 2.2rem;
+}
+
+.summary-value-in, .summary-value-interest {
+  color: #00b79f;
+}
+
+.summary-value-out {
+  color: #f3442a;
+}
+
+.btn-sort {
+  text-transform: uppercase;
+  cursor: pointer;
+  background: none;
+  margin-left: auto;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.operation {
+  color: #333;
+  border-radius: 1rem;
+  padding: 3rem 4rem;
+}
+
+.operation-transfer {
+  background-color: #00b79f;
+}
+
+.operation-loan {
+  background-color: #f3442a;
+}
+
+.operation-close {
+  background-color: #fdb850;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.form {
+  grid-template-rows: auto auto;
+  grid-template-columns: 2.5fr 2.5fr 1fr;
+  gap: .4rem 1rem;
+  display: grid;
+}
+
+.form.form-loan {
+  grid-template-columns: 2.5fr 1fr 2.5fr;
+}
+
+.form-label-loan {
+  grid-row: 2;
+}
+
+.form-input {
+  width: 100%;
+  text-align: center;
+  color: #333;
+  background-color: #ffffff4d;
+  border-radius: .5rem;
+  padding: .3rem 1rem;
+  font-family: inherit;
+  font-size: 1.5rem;
+  transition: all .3s;
+}
+
+.form-input:focus {
+  background-color: #fff9;
+}
+
+.form-label {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.form-btn {
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: .5rem;
+  font-size: 1.8rem;
+  transition: all .3s;
+}
+
+.form-btn:focus {
+  background-color: #ffffffbf;
+}
+
+.logout-timer {
+  text-align: right;
+  margin-top: 2rem;
+  padding: 0 .3rem;
+  font-size: 1.3rem;
+}
+
+.timer {
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  color: #888;
+  padding-top: 3rem;
+  font-size: 1.3rem;
+}
+
+/*# sourceMappingURL=index.2cdaf7bc.css.map */

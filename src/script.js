@@ -1,9 +1,8 @@
-"use strict";
+import "core-js/stable";
 
 /////////////////////////////////////////////////////////////
 // Data
 /////////////////////////////////////////////////////////////
-
 const accounts = [
   {
     owner: "Shohanur Rahman",
@@ -50,7 +49,6 @@ const accounts = [
 /////////////////////////////////////////////////////////////
 // Elements
 /////////////////////////////////////////////////////////////
-
 const labelWelcome = document.querySelector(".welcome");
 const labelDate = document.querySelector(".date");
 const labelBalance = document.querySelector(".balance-value");
@@ -58,16 +56,13 @@ const labelSumIn = document.querySelector(".summary-value-in");
 const labelSumOut = document.querySelector(".summary-value-out");
 const labelSumInterest = document.querySelector(".summary-value-interest");
 const labelTimer = document.querySelector(".timer");
-
 const containerApp = document.querySelector(".app");
 const containerMovements = document.querySelector(".movements");
-
 const btnLogin = document.querySelector(".login-btn");
 const btnTransfer = document.querySelector(".form-btn-transfer");
 const btnLoan = document.querySelector(".form-btn-loan");
 const btnClose = document.querySelector(".form-btn-close");
 const btnSort = document.querySelector(".btn-sort");
-
 const inputLoginUsername = document.querySelector(".login-input-username");
 const inputLoginPassword = document.querySelector(".login-input-password");
 const inputTransferTo = document.querySelector(".form-input-to");
@@ -79,7 +74,6 @@ const inputClosePassword = document.querySelector(".form-input-password");
 /////////////////////////////////////////////////////////////
 // Create usernames
 /////////////////////////////////////////////////////////////
-
 function createUsernames(accounts) {
   accounts.forEach((account) => {
     account.username = account.owner
@@ -94,7 +88,6 @@ createUsernames(accounts);
 /////////////////////////////////////////////////////////////
 // Days calculation
 /////////////////////////////////////////////////////////////
-
 function formatMovementDate(date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -111,7 +104,6 @@ function formatMovementDate(date, locale) {
 /////////////////////////////////////////////////////////////
 // Formatting currencies
 /////////////////////////////////////////////////////////////
-
 function formatCurrency(value, locale, currency) {
   return new Intl.NumberFormat(locale, {
     style: "currency",
@@ -122,7 +114,6 @@ function formatCurrency(value, locale, currency) {
 /////////////////////////////////////////////////////////////
 // Display movements
 /////////////////////////////////////////////////////////////
-
 function displayMovements(account, sort = false) {
   containerMovements.innerHTML = "";
 
@@ -159,7 +150,6 @@ function displayMovements(account, sort = false) {
 /////////////////////////////////////////////////////////////
 // Display balance
 /////////////////////////////////////////////////////////////
-
 function displayBalance(account) {
   account.balance = account.movements.reduce((acc, move) => acc + move, 0);
 
@@ -173,7 +163,6 @@ function displayBalance(account) {
 /////////////////////////////////////////////////////////////
 // Display summary
 /////////////////////////////////////////////////////////////
-
 function displaySummary(account) {
   const incomes = account.movements
     .filter((move) => move > 0)
@@ -211,7 +200,6 @@ function displaySummary(account) {
 /////////////////////////////////////////////////////////////
 // Update UI
 /////////////////////////////////////////////////////////////
-
 function updateUI(currentAccount) {
   // Display movements
   displayMovements(currentAccount);
@@ -224,7 +212,6 @@ function updateUI(currentAccount) {
 /////////////////////////////////////////////////////////////
 // Implementing login
 /////////////////////////////////////////////////////////////
-
 let currentAccount, timer;
 
 btnLogin.addEventListener("click", (e) => {
@@ -278,7 +265,6 @@ btnLogin.addEventListener("click", (e) => {
 /////////////////////////////////////////////////////////////
 // Implementing transfers
 /////////////////////////////////////////////////////////////
-
 btnTransfer.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -329,7 +315,6 @@ btnTransfer.addEventListener("click", (e) => {
 /////////////////////////////////////////////////////////////
 // Implementing loan
 /////////////////////////////////////////////////////////////
-
 btnLoan.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -373,7 +358,6 @@ btnLoan.addEventListener("click", (e) => {
 /////////////////////////////////////////////////////////////
 // Close account
 /////////////////////////////////////////////////////////////
-
 btnClose.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -409,7 +393,6 @@ btnClose.addEventListener("click", (e) => {
 /////////////////////////////////////////////////////////////
 // Sorting
 /////////////////////////////////////////////////////////////
-
 let sorted = false;
 
 btnSort.addEventListener("click", (e) => {
@@ -421,7 +404,6 @@ btnSort.addEventListener("click", (e) => {
 /////////////////////////////////////////////////////////////
 // Logout timer
 /////////////////////////////////////////////////////////////
-
 function logOutTimer() {
   labelTimer.textContent = "";
 
@@ -458,6 +440,5 @@ function logOutTimer() {
 /////////////////////////////////////////////////////////////
 // Copyright year
 /////////////////////////////////////////////////////////////
-
 document.querySelector(".copyright-year").textContent =
   new Date().getFullYear();
