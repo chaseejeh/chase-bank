@@ -1,9 +1,15 @@
-## Spectra Bank - Login Details
+# Spectra Bank - A Modern Bank Application
 
-### Account 1:
+## Features:
 
-Username: sr, Password: 1234
+1. Users can login in this bank
+2. Users can perform various banking activities
 
-### Account 2:
+## Login Details:
 
-Username: sba, Password: 5678
+1. Account 1 [Username: sr, Password: 1234]
+2. Account 2 [Username: sba, Password: 5678]
+
+## Live Link: https://spectra-bank.netlify.app
+
+## Thanks for watching this project
