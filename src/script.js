@@ -5,8 +5,8 @@ import "core-js/stable";
 /////////////////////////////////////////////////////////////
 const accounts = [
   {
-    owner: "Shohanur Rahman",
-    movements: [2500, 500, -750, 1200, 3200, -1500, 500, 1200, -1750, 1800],
+    owner: "James Ronald",
+    movements: [25000, 5000, -1750, 12000, 3200, -1500, 1500, 120000, -1750, -11800],
     interestRate: 1.5, // %
     password: 1234,
     movementsDates: [
@@ -25,8 +25,8 @@ const accounts = [
     locale: "en-US",
   },
   {
-    owner: "Sunerah Binte Ayesha",
-    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -300, 1500, -1850],
+    owner: "James Ronald",
+    movements: [50000, 34000, -1150, -7900, -3210, -1000, 85000, -3000, 15000, -1850],
     interestRate: 1.3, // %
     password: 5678,
     movementsDates: [
